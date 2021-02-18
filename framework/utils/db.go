@@ -1,0 +1,33 @@
+package utils
+
+import (
+	"log"
+	"os"
+
+	"github.com/jinzhu/gorm"
+	"github.com/joho/godotenv"
+)
+
+func ConnectDB() *gorm.DB {
+
+	err := godotenv.Load()
+
+	err != nil {
+		log.Fatalf("Error Loading .env Fail")
+	}
+	//pacote do GO que le variavel de ambiente. Esta no arquivo .ENV
+	dsn := os.Getenv( key: "dsn")
+
+	db, err := gorm.Open("postgres", dsn)
+
+	if err != nil{
+		log.Fatalf("Error connecting DBase Fail: %v", err)
+		panic(err)
+	}
+	//Fecha a conexao
+	//defer db.Close()
+	//cria a tabela conforme o definido em User
+	db.AutoMigrate(&domain.User{})
+
+	return db
+}
