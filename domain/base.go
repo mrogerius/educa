@@ -9,10 +9,10 @@ import (
 )
 
 type Base struct {
-	ID       string     `json:"id" gorm:"type:uuid;primary_key"`
-	CreateAt time.Timer `json:"created_at" gorm:"type:datetime"`
-	UpdateAt time.Timer `json:"updated_at" gorm:"type:datetime"`
-	DeleteAt time.Timer `json:"deleted_at" gorm:"type:datetime"; sql:"index"`
+	ID       string    `json:"id" gorm:"type:uuid;primary_key"`
+	CreateAt time.Time `json:"created_at"`
+	UpdateAt time.Time `json:"updated_at"`
+	DeleteAt time.Time `json:"deleted_at" sql:"index"`
 }
 
 func (base *Base) BeforeCreate(scope *gorm.Scope) error {
@@ -21,7 +21,7 @@ func (base *Base) BeforeCreate(scope *gorm.Scope) error {
 	if err != nil {
 		log.Fatalf("Error during obj creating: %v", err)
 	}
-	err := scope.SetColumn("ID", uuid.NewV4().String())
+	err = scope.SetColumn("ID", uuid.NewV4().String())
 
 	if err != nil {
 		log.Fatalf("Error during obj creating: %v", err)

@@ -6,21 +6,24 @@ import (
 
 	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
+	"github.com/mrogerius/educa/domain"
 )
 
 func ConnectDB() *gorm.DB {
 
 	err := godotenv.Load()
 
-	err != nil {
-		log.Fatalf("Error Loading .env Fail")
+	if err != nil {
+		log.Fatalf("Erro ao carregar")
 	}
 	//pacote do GO que le variavel de ambiente. Esta no arquivo .ENV
-	dsn := os.Getenv( key: "dsn")
+
+	dsn := os.Getenv("dsn")
 
 	db, err := gorm.Open("postgres", dsn)
 
-	if err != nil{
+	if err != nil {
 		log.Fatalf("Error connecting DBase Fail: %v", err)
 		panic(err)
 	}
