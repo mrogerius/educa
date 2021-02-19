@@ -26,5 +26,5 @@ func main() {
 		log.Fatalf("erro")
 	}
 
-	fmt.Println(result)
+	fmt.Println(result.Name)
 }
